@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Core Craft — TX Monitor</title>
+
+  <style>
+    /* =========================
+   VARIABLES
+========================= */
+    :root {
+      --bg: #0b1020;
+      --card: #111a33;
+      --text: #e9eefc;
+      --muted: #a8b3d6;
+      --line: rgba(255, 255, 255, .08);
+
+      --ok: #2be4a7;
+      --warn: #ffcc66;
+      --bad: #ff5c7a;
+      --brand: #ff9f1a;
+    }
+
+    /* RESET */
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui;
+      color: var(--text);
+
+      background:
+        radial-gradient(1200px 700px at 20% -10%, rgba(255, 159, 26, .25), transparent 55%),
+        radial-gradient(1000px 600px at 90% 10%, rgba(43, 228, 167, .18), transparent 50%),
+        var(--bg);
+    }
+
+    /* LAYOUT */
+    .app {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 28px 18px;
+    }
+
+    .app__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    /* BRAND */
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .brand__logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--brand);
+      font-weight: 700;
+    }
+
+    /* GRID */
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid--2 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* CARD */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    .card__header {
+      padding: 14px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card__body {
+      padding: 14px;
+    }
+
+    /* TEXT */
+    .text--muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* FORM */
+    .form {
+      display: flex;
+      gap: 10px;
+    }
+
+    input,
+    select {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: #0003;
+      color: var(--text);
+      width: 100%;
+    }
+
+    button {
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: var(--brand);
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn--ghost {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    /* COMPONENTS */
+    .pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--warn);
+    }
+
+    .dot.small {
+      width: 6px;
+      height: 6px;
+    }
+
+    /* TAG */
+    .tag {
+      font-size: 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 10px;
+      color: var(--muted);
+    }
+
+    /* LIST */
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .item {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    .mono {
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+    /* TOAST */
+    .toast {
+      margin-top: 12px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hidden {
+      display: none
+    }
+
+    /* WALLET */
+    .wallet {
+      display: flex;
+      gap: 30px;
+    }
+
+    .wallet__item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* EMPTY */
+    .empty {
+      padding: 12px;
+      border: 1px dashed var(--line);
+      color: var(--muted);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width:800px) {
+      .grid--2 {
+        grid-template-columns: 1fr
+      }
+
+      .form {
+        flex-direction: column
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+
+    <header class="app__header">
+      <div class="brand">
+        <div class="brand__logo">₿</div>
+        <div>
+          <h1>Core Craft — TX Monitor</h1>
+          <p class="text--muted">criação → broadcast → mempool → bloco</p>
+        </div>
+      </div>
+
+      <div class="pill">
+        <span class="dot" id="apiDot"></span>
+        <span id="apiText">Conectando…</span>
+      </div>
+    </header>
+
+    <!-- WALLET -->
+    <section class="card">
+      <div class="card__header">
+        <h2>Wallet ativa</h2>
+        <span class="tag" id="wsTag">—</span>
+      </div>
+
+      <div class="card__body wallet">
+        <div class="wallet__item">
+          <span class="label">Wallet</span>
+          <span id="wsName">—</span>
+        </div>
+        <div class="wallet__item">
+          <span class="label">Saldo</span>
+          <span id="wsBalance">—</span>
+        </div>
+        <div class="wallet__item">
+          <span class="label">UTXOs</span>
+          <span id="wsUtxos">—</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid grid--2">
+
+      <!-- SEND -->
+      <article class="card">
+        <div class="card__header">
+          <h2>Enviar transação</h2>
+          <span class="tag" id="lastStatusTag">status: —</span>
+        </div>
+
+        <div class="card__body">
+
+          <label>Wallet</label>
+          <select id="walletSelect" onchange="onWalletChange()"></select>
+
+          <p class="text--muted">
+            Wallet ativa: <strong id="walletContextName">—</strong>
+          </p>
+
+          <div class="form">
+            <input id="address" placeholder="tb1q..." />
+            <input id="amount" placeholder="0.00002" />
+            <button id="btnSend" onclick="sendTx()">Enviar</button>
+          </div>
+
+          <div class="toast hidden" id="toast">
+            <div>
+              <strong id="toastTitle"></strong>
+              <small id="toastBody"></small>
+            </div>
+            <button class="btn--ghost" onclick="hideToast()">Ok</button>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- LIST -->
+      <article class="card">
+        <div class="card__header">
+          <h2>Transações</h2>
+          <button class="btn--ghost" onclick="clearHistory()">Limpar</button>
+        </div>
+
+        <div class="card__body">
+          <div id="list" class="list"></div>
+          <div id="empty" class="empty">Nenhuma transação ainda</div>
+        </div>
+      </article>
+
+    </section>
+
+  </main>
+
+  <script>
+    /* JS ORIGINAL — NÃO ALTERADO */
+    const API_BASE = "";
+    const STORAGE_KEY = "corecraft_tx_history_v2";
+    let history = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+    function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(history)); }
+
+    function showToast(t, b) {
+      document.getElementById("toastTitle").innerText = t;
+      document.getElementById("toastBody").innerText = b;
+      document.getElementById("toast").classList.remove("hidden");
+    }
+    function hideToast() {
+      document.getElementById("toast").classList.add("hidden");
+    }
+
+    async function sendTx() {
+      const address = document.getElementById("address").value;
+      const amount = document.getElementById("amount").value;
+
+      const res = await fetch("/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ address, amount })
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        showToast("Erro", data.error || "Falha");
+        return;
+      }
+
+      history.unshift(data);
+      save();
+      render();
+      showToast("Enviado", data.txid);
+    }
+
+    function render() {
+      const list = document.getElementById("list");
+      const empty = document.getElementById("empty");
+
+      list.innerHTML = "";
+      if (history.length === 0) {
+        empty.style.display = "block";
+        return;
+      }
+      empty.style.display = "none";
+
+      history.forEach(tx => {
+        const el = document.createElement("div");
+        el.className = "item";
+        el.innerHTML = `<div class="mono">${tx.txid}</div>`;
+        list.appendChild(el);
+      });
+    }
+
+    function clearHistory() {
+      history = [];
+      save();
+      render();
+    }
+
+    render();
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Core Craft • Node Activity Panel (Aula 2)</title>
+
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+  <main class="app">
+
+    <!-- HEADER -->
+    <header class="app__header">
+
+      <div class="brand">
+        <div class="brand__logo">CC</div>
+
+        <div class="brand__text">
+          <h1>Node Activity Panel</h1>
+          <p class="text--muted">
+            RPC = fotografia • ZMQ = fluxo • Eventos ≠ confirmação
+          </p>
+        </div>
+      </div>
+
+      <div class="app__actions">
+        <div class="pill" id="healthPill">checando…</div>
+        <button class="btn" id="btnRefresh">Atualizar</button>
+      </div>
+
+    </header>
+
+    <!-- GRID -->
+    <section class="grid grid--2">
+
+      <!-- RPC STATE -->
+      <article class="card">
+        <div class="card__header">
+          <h2>Estado (RPC)</h2>
+          <span class="tag">request/response</span>
+        </div>
+
+        <div class="kv">
+          <div class="k">chain</div>
+          <div class="v" id="chain">—</div>
+
+          <div class="k">height</div>
+          <div class="v" id="height">—</div>
+
+          <div class="k">bestblockhash</div>
+          <div class="v mono" id="bestblockhash">—</div>
+
+          <div class="k">mempool size</div>
+          <div class="v" id="mempoolSize">—</div>
+        </div>
+
+        <p class="hint">
+          RPC responde “qual é o estado agora?”. Serve para confirmar e decidir.
+        </p>
+      </article>
+
+      <!-- ZMQ FLOW -->
+      <article class="card">
+        <div class="card__header">
+          <h2>Fluxo (ZMQ)</h2>
+          <span class="tag">event stream</span>
+        </div>
+
+        <div class="kv">
+          <div class="k">último bloco visto</div>
+          <div class="v mono" id="lastSeenBlock">—</div>
+
+          <div class="k">eventos de bloco</div>
+          <div class="v" id="blockCount">—</div>
+
+          <div class="k">eventos de tx</div>
+          <div class="v" id="txCount">—</div>
+        </div>
+
+        <div class="warn hidden" id="divergenceWarn">
+          ⚠ RPC bestblockhash ≠ último bloco visto via ZMQ.
+          Pode ser latência, reorg, eventos fora de ordem ou timing do polling.
+        </div>
+
+        <p class="hint">
+          ZMQ avisa “algo aconteceu”. Não é confirmação. Não é fonte final.
+        </p>
+      </article>
+
+      <!-- SUMMARY -->
+      <article class="card">
+        <div class="card__header">
+          <h2>Event Activity</h2>
+          <span class="tag">summary</span>
+        </div>
+
+        <div class="kv">
+          <div class="k">blocos recebidos</div>
+          <div class="v" id="sumBlocks">—</div>
+
+          <div class="k">txs recebidas</div>
+          <div class="v" id="sumTxs">—</div>
+
+          <div class="k">taxa (tx/s)</div>
+          <div class="v" id="sumTxRate">—</div>
+
+          <div class="k">último evento</div>
+          <div class="v" id="sumLastEvent">—</div>
+        </div>
+
+        <p class="hint">
+          Contadores acumulados desde o início do servidor.
+        </p>
+      </article>
+
+      <!-- DIVERGENCE -->
+      <article class="card">
+        <div class="card__header">
+          <h2>Divergência RPC × ZMQ</h2>
+          <span class="tag">state-comparison</span>
+        </div>
+
+        <div class="divStatus divWaiting" id="divStatus">
+          ⏳ Aguardando primeiro bloco via ZMQ
+        </div>
+
+        <div class="kv mt">
+          <div class="k">best_block (RPC)</div>
+          <div class="v mono" id="divBest">—</div>
+
+          <div class="k">último visto (ZMQ)</div>
+          <div class="v mono" id="divLast">—</div>
+        </div>
+      </article>
+
+      <!-- LATEST EVENTS -->
+      <article class="card span2">
+        <div class="card__header">
+          <h2>Últimos Eventos</h2>
+          <span class="tag">/api/events/latest</span>
+        </div>
+
+        <div class="events">
+          <div>
+            <div class="events__label">Blocos</div>
+            <div class="list" id="latestBlocks"></div>
+          </div>
+
+          <div>
+            <div class="events__label">Transações</div>
+            <div class="list" id="latestTxs"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- BLOCK EVENTS -->
+      <article class="card span2">
+        <div class="card__header">
+          <h2>Últimos blocos (eventos)</h2>
+          <span class="tag">hashblock</span>
+        </div>
+
+        <div class="list" id="blockList"></div>
+      </article>
+
+      <!-- TX EVENTS -->
+      <article class="card span2">
+        <div class="card__header">
+          <h2>Últimas txs vistas na mempool (eventos)</h2>
+          <span class="tag">hashtx</span>
+        </div>
+
+        <div class="list" id="txList"></div>
+      </article>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="text--muted">
+        O frontend não escuta ZMQ. Ele só consome a API HTTP do backend.
+      </div>
+
+      <div class="text--muted" id="serverTime">—</div>
+    </footer>
+
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,349 @@
+/* =========================
+   VARIABLES
+========================= */
+:root{
+  --bg:#0b0f14;
+  --card:#111826;
+  --text:#e9f0f7;
+  --muted:#8aa0b5;
+
+  --line:rgba(255,255,255,.10);
+  --line2:rgba(255,255,255,.08);
+
+  --glow:rgba(93,214,255,.12);
+  --glow2:rgba(110,243,165,.10);
+
+  --warn:rgba(255,204,102,.22);
+  --warnBg:rgba(255,204,102,.08);
+}
+
+/* =========================
+   RESET
+========================= */
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+
+  background:
+    radial-gradient(1200px 600px at 20% 10%, var(--glow), transparent 60%),
+    radial-gradient(900px 500px at 90% 30%, var(--glow2), transparent 60%),
+    var(--bg);
+
+  color:var(--text);
+}
+
+/* =========================
+   LAYOUT
+========================= */
+.app{
+  max-width:1120px;
+  margin:0 auto;
+  padding:28px 18px 40px;
+}
+
+.app__header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+
+  margin-bottom:18px;
+}
+
+.app__actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+/* =========================
+   BRAND
+========================= */
+.brand{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
+.brand__logo{
+  width:42px;
+  height:42px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:14px;
+  font-weight:700;
+
+  background:rgba(93,214,255,.08);
+  border:1px solid rgba(93,214,255,.22);
+}
+
+/* =========================
+   TEXT
+========================= */
+h1{
+  margin:0;
+  font-size:28px;
+}
+
+.text--muted{
+  margin-top:6px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* =========================
+   COMPONENTS
+========================= */
+.pill{
+  padding:10px 12px;
+  border-radius:999px;
+
+  font-size:13px;
+  color:var(--muted);
+
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--line);
+}
+
+.btn{
+  padding:10px 12px;
+  border-radius:12px;
+
+  border:1px solid rgba(93,214,255,.25);
+  background:rgba(93,214,255,.10);
+  color:var(--text);
+
+  cursor:pointer;
+}
+
+.btn:hover{
+  background:rgba(93,214,255,.16);
+}
+
+/* =========================
+   GRID
+========================= */
+.grid{
+  display:grid;
+  gap:14px;
+}
+
+.grid--2{
+  grid-template-columns:1fr 1fr;
+}
+
+.span2{
+  grid-column:span 2;
+}
+
+/* =========================
+   CARD
+========================= */
+.card{
+  padding:14px 14px 12px;
+  border-radius:18px;
+
+  background:rgba(17,24,38,.78);
+  border:1px solid var(--line);
+
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.card__header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:12px;
+}
+
+.card h2{
+  margin:0;
+  font-size:15px;
+  color:#d7e6f4;
+}
+
+/* =========================
+   TAG
+========================= */
+.tag{
+  font-size:12px;
+  padding:4px 10px;
+
+  border-radius:999px;
+  border:1px solid var(--line2);
+
+  background:rgba(255,255,255,.05);
+  color:rgba(233,240,247,.9);
+}
+
+/* =========================
+   KV GRID
+========================= */
+.kv{
+  display:grid;
+  grid-template-columns:180px 1fr;
+  gap:8px 12px;
+  align-items:center;
+}
+
+.k{
+  font-size:13px;
+  color:var(--muted);
+}
+
+.v{
+  font-size:14px;
+}
+
+.mono{
+  font-family: ui-monospace, monospace;
+  font-size:13px;
+  word-break:break-all;
+}
+
+.mt{margin-top:10px}
+
+/* =========================
+   LIST
+========================= */
+.list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+
+  max-height:280px;
+  overflow:auto;
+}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+
+  padding:10px;
+  border-radius:14px;
+
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--line2);
+}
+
+.badge{
+  font-size:12px;
+  padding:4px 10px;
+
+  border-radius:999px;
+
+  background:rgba(93,214,255,.08);
+  border:1px solid rgba(93,214,255,.20);
+}
+
+/* =========================
+   EVENTS
+========================= */
+.events{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.events__label{
+  margin-bottom:8px;
+
+  font-size:12px;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+
+  color:var(--muted);
+}
+
+/* =========================
+   ALERTS / INFO
+========================= */
+.warn{
+  margin-top:12px;
+  padding:10px;
+
+  border-radius:14px;
+  font-size:13px;
+
+  background:var(--warnBg);
+  border:1px solid var(--warn);
+  color:rgba(255,240,210,.92);
+}
+
+.hint{
+  margin-top:12px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* =========================
+   DIVERGENCE STATUS
+========================= */
+.divStatus{
+  padding:10px 14px;
+  border-radius:14px;
+  font-size:13px;
+}
+
+.divWaiting{
+  background:rgba(138,160,181,.10);
+  border:1px solid rgba(138,160,181,.25);
+  color:var(--muted);
+}
+
+.divOk{
+  background:rgba(110,243,165,.08);
+  border:1px solid rgba(110,243,165,.22);
+  color:rgba(110,243,165,.92);
+}
+
+.divAlert{
+  background:var(--warnBg);
+  border:1px solid var(--warn);
+  color:rgba(255,240,210,.92);
+}
+
+/* =========================
+   FOOTER
+========================= */
+.footer{
+  margin-top:14px;
+
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width:860px){
+  .grid--2{
+    grid-template-columns:1fr;
+  }
+
+  .span2{
+    grid-column:span 1;
+  }
+
+  .kv{
+    grid-template-columns:140px 1fr;
+  }
+
+  .events{
+    grid-template-columns:1fr;
+  }
+
+  .item{
+    flex-wrap:wrap;
+  }
+}

@@ -1,0 +1,304 @@
+/* =========================
+   VARIABLES
+========================= */
+:root {
+  --bg: #0b0f17;
+  --card: #111827;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --line: #1f2937;
+
+  --accent: #f59e0b;
+  --accent2: #fb7185;
+  --error: #ef4444;
+}
+
+/* =========================
+   RESET
+========================= */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+
+  background:
+    radial-gradient(1200px 600px at 20% 10%, rgba(245,158,11,.15), transparent 50%),
+    radial-gradient(900px 500px at 80% 20%, rgba(251,113,133,.12), transparent 55%),
+    var(--bg);
+
+  color: var(--text);
+}
+
+/* =========================
+   LAYOUT
+========================= */
+.app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.app__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  gap: 16px;
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.app__title h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.app__title span {
+  color: var(--accent);
+}
+
+.app__title p {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+.app__actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* =========================
+   GRID
+========================= */
+.grid {
+  display: grid;
+  gap: 14px;
+  margin: 14px 0;
+}
+
+.grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* =========================
+   CARD
+========================= */
+.card {
+  padding: 16px;
+  border-radius: 16px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,.03),
+    rgba(255,255,255,.01)
+  );
+
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
+.card h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+/* =========================
+   TEXT
+========================= */
+.text--muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.btn {
+  padding: 10px 12px;
+  border-radius: 12px;
+
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.06);
+  color: var(--text);
+
+  cursor: pointer;
+}
+
+.btn:hover {
+  border-color: rgba(245,158,11,.45);
+}
+
+.btn--primary {
+  background: linear-gradient(
+    90deg,
+    rgba(245,158,11,.95),
+    rgba(251,113,133,.75)
+  );
+
+  border: none;
+  color: #111827;
+  font-weight: 700;
+}
+
+/* =========================
+   FORM
+========================= */
+.form {
+  display: flex;
+  gap: 10px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px 12px;
+
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.10);
+
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+}
+
+label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* =========================
+   TABLE
+========================= */
+.table {
+  overflow: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+th {
+  font-weight: 600;
+  color: var(--muted);
+  background: rgba(17,24,39,.35);
+}
+
+tbody tr:hover {
+  background: rgba(245,158,11,.06);
+}
+
+/* =========================
+   KV GRID
+========================= */
+.kv {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.kv div {
+  padding: 10px;
+  border-radius: 12px;
+
+  background: rgba(17,24,39,.35);
+  border: 1px solid rgba(255,255,255,.06);
+}
+
+.kv .k {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.kv .v {
+  margin-top: 6px;
+  font-size: 15px;
+  word-break: break-all;
+}
+
+/* =========================
+   CODE / PRE
+========================= */
+.pre {
+  margin-top: 10px;
+  padding: 12px;
+
+  max-height: 280px;
+  overflow: auto;
+
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.08);
+
+  background: rgba(0,0,0,.25);
+}
+
+/* =========================
+   ERROR
+========================= */
+.error {
+  margin-top: 10px;
+  padding: 10px 12px;
+
+  font-size: 13px;
+  color: #fecaca;
+
+  border-radius: 12px;
+  border: 1px solid rgba(239,68,68,.35);
+  background: rgba(239,68,68,.08);
+}
+
+.hidden {
+  display: none;
+}
+
+/* =========================
+   ROW
+========================= */
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.row__right {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* =========================
+   FOOTER
+========================= */
+.footer {
+  margin-top: 18px;
+  text-align: center;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .grid--2 {
+    grid-template-columns: 1fr;
+  }
+
+  .app__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
